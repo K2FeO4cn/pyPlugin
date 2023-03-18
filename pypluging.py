@@ -17,10 +17,10 @@ class PluginHookManager:
         self.logger : logging.Logger = logging.getLogger("plugin-hook")
     def create(self,hook_name : str = None,default_handler : Callable[[Any,Any],Any] = None) -> None:
         if hook_name is None:
-            self.logger.warn("No hook name was given. Ignored...")
+            self.logger.warning("No hook name was given. Ignored...")
             return
         if hook_name in self.hooktable:
-            self.logger.warn("Hook name had been taken. Ignored...")
+            self.logger.warning("Hook name had been taken. Ignored...")
             return
         self.hooktable[hook_name] = []
         if default_handler is not None:
@@ -30,13 +30,13 @@ class PluginHookManager:
     
     def publish(self,hook_name : str = None,args : tuple = None):
         if hook_name is None:
-            self.logger.warn("No hook name was given. Ignored...")
+            self.logger.warning("No hook name was given. Ignored...")
             return
         if not hook_name in self.hooktable:
-            self.logger.warn("Invaild hook name was given. Ignored...")
+            self.logger.warning("Invaild hook name was given. Ignored...")
             return
         if args is None:
-            self.logger.warn("No arguments were given. Setting empty...")
+            self.logger.warning("No arguments were given. Setting empty...")
             args = tuple()
         for subscriber in self.hooktable[hook_name]:
             try:
@@ -51,10 +51,10 @@ class PluginHookManager:
 
     def register(self,hook_name : str = None,func : Callable[[Any,Any],Any] = None,priority : int = 1):
         if hook_name is None:
-            self.logger.warn("No hook name was given. Ignored...")
+            self.logger.warning("No hook name was given. Ignored...")
             return
         if func is None:
-            self.logger.warn("No function was given. Ignored...")
+            self.logger.warning("No function was given. Ignored...")
             return
         i = 0
         while True:
@@ -119,7 +119,7 @@ class ConfigManager:
         self.logger.info("Initialed Config Manager Subsystem.")
     def init(self) -> None:
         if not os.path.exists(self.file):
-            self.logger.warn("Config file \"%s\" doesn't exist! Creating...",self.file)
+            self.logger.warning("Config file \"%s\" doesn't exist! Creating...",self.file)
             fp : TextIOWrapper= open(self.file, 'x')
             fp.close()
         fp : TextIOWrapper = open(self.file,"r+",encoding="UTF-8")
